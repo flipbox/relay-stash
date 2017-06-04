@@ -69,26 +69,12 @@ class Cache extends AbstractMiddleware
 
         // If it's cached
         if ($item->isHit()) {
-            // Log
-            $this->info(
-                "Item found in Cache. [key: {key}, expires: {expires}]",
-                    [
-                    'key' => $key,
-                    'expires' => $item->getExpiration()->getTimestamp()
-                ]
-            );
-
-            // Add response body
-            $response = $response->withBody(
-                StreamFactory::create($item->get())
-            );
-
-            return $response;
+            return $this->applyCacheToResponseBody($response, $item);
         } else {
             // Log
             $this->info(
                 "Item not found in Cache. [key: {key}]",
-                    [
+                [
                     'key' => $key
                 ]
             );
@@ -102,26 +88,7 @@ class Cache extends AbstractMiddleware
 
         // Only cache successful responses
         if ($this->isResponseSuccessful($response)) {
-            /** @var StreamInterface $body */
-            $body = $response->getBody();
-
-            // Set cache contents
-            $item->set($body->getContents());
-
-            // Save cache item
-            $this->pool->save($item);
-
-            // Rewind stream
-            $body->rewind();
-
-            // Log
-            $this->info(
-                "Save item to Cache. [key: {key}, expires: {expires}]",
-                [
-                    'key' => $key,
-                    'expires' => $item->getExpiration()->getTimestamp()
-                ]
-            );
+            $this->cacheResponse($response, $item);
         } else {
             // Log
             $this->info(
@@ -134,6 +101,58 @@ class Cache extends AbstractMiddleware
         }
 
         return $response;
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @param ItemInterface $item
+     * @return ResponseInterface
+     */
+    protected function applyCacheToResponseBody(ResponseInterface $response, ItemInterface $item)
+    {
+        // Log
+        $this->info(
+            "Item found in Cache. [key: {key}, expires: {expires}]",
+            [
+                'key' => $item->getKey(),
+                'expires' => $item->getExpiration()->getTimestamp()
+            ]
+        );
+
+        // Add response body
+        return $response->withBody(
+            StreamFactory::create($item->get())
+        );
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @param ItemInterface $item
+     */
+    protected function cacheResponse(ResponseInterface $response, ItemInterface $item)
+    {
+
+        /** @var StreamInterface $body */
+        $body = $response->getBody();
+
+        // Set cache contents
+        $item->set($body->getContents());
+
+        // Save cache item
+        $this->pool->save($item);
+
+        // Rewind stream
+        $body->rewind();
+
+        // Log
+        $this->info(
+            "Save item to Cache. [key: {key}, expires: {expires}]",
+            [
+                'key' => $item->getKey(),
+                'expires' => $item->getExpiration()->getTimestamp()
+            ]
+        );
+
     }
 
     /**
