@@ -131,7 +131,6 @@ class Cache extends AbstractMiddleware
      */
     protected function cacheResponse(ResponseInterface $response, ItemInterface $item)
     {
-
         /** @var StreamInterface $body */
         $body = $response->getBody();
 
@@ -152,7 +151,6 @@ class Cache extends AbstractMiddleware
                 'expires' => $item->getExpiration()->getTimestamp()
             ]
         );
-
     }
 
     /**
