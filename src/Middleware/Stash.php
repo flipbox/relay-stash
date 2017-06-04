@@ -39,7 +39,6 @@ class Cache extends AbstractMiddleware
 
         // Ensure we have a valid pool
         if (!$this->pool instanceof CacheItemPoolInterface) {
-
             throw new InvalidCachePoolException(
                 sprintf(
                     "The class '%s' requires a cache pool that is an instance of '%s', '%s' given.",
@@ -48,15 +47,17 @@ class Cache extends AbstractMiddleware
                     get_class($this->pool)
                 )
             );
-
         }
     }
 
     /**
      * @inheritdoc
      */
-    public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next = null): ResponseInterface
-    {
+    public function __invoke(
+        RequestInterface $request,
+        ResponseInterface $response,
+        callable $next = null
+    ): ResponseInterface {
         // Do parent (logging)
         parent::__invoke($request, $response);
 
@@ -68,7 +69,7 @@ class Cache extends AbstractMiddleware
 
         // If it's cached
         if ($item->isHit()) {
-
+            // Log
             $this->info(
                 "Item found in Cache. [key: {key}, expires: {expires}]", [
                 'key' => $key,
@@ -81,14 +82,12 @@ class Cache extends AbstractMiddleware
             );
 
             return $response;
-
         } else {
-
+            // Log
             $this->info(
                 "Item not found in Cache. [key: {key}]", [
                 'key' => $key
             ]);
-
         }
 
         // Lock item
@@ -99,7 +98,6 @@ class Cache extends AbstractMiddleware
 
         // Only cache successful responses
         if ($this->isResponseSuccessful($response)) {
-
             /** @var StreamInterface $body */
             $body = $response->getBody();
 
@@ -118,15 +116,13 @@ class Cache extends AbstractMiddleware
                 'key' => $key,
                 'expires' => $item->getExpiration()->getTimestamp()
             ]);
-
         } else {
-
+            // Log
             $this->info(
                 "Did not save to cache because request was unsuccessful.", [
                 'key' => $key,
                 'statusCode' => $response->getStatusCode()
             ]);
-
         }
 
         return $response;
