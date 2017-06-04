@@ -71,10 +71,12 @@ class Cache extends AbstractMiddleware
         if ($item->isHit()) {
             // Log
             $this->info(
-                "Item found in Cache. [key: {key}, expires: {expires}]", [
-                'key' => $key,
-                'expires' => $item->getExpiration()->getTimestamp()
-            ]);
+                "Item found in Cache. [key: {key}, expires: {expires}]",
+                    [
+                    'key' => $key,
+                    'expires' => $item->getExpiration()->getTimestamp()
+                ]
+            );
 
             // Add response body
             $response = $response->withBody(
@@ -85,9 +87,11 @@ class Cache extends AbstractMiddleware
         } else {
             // Log
             $this->info(
-                "Item not found in Cache. [key: {key}]", [
-                'key' => $key
-            ]);
+                "Item not found in Cache. [key: {key}]",
+                    [
+                    'key' => $key
+                ]
+            );
         }
 
         // Lock item
@@ -112,17 +116,21 @@ class Cache extends AbstractMiddleware
 
             // Log
             $this->info(
-                "Save item to Cache. [key: {key}, expires: {expires}]", [
-                'key' => $key,
-                'expires' => $item->getExpiration()->getTimestamp()
-            ]);
+                "Save item to Cache. [key: {key}, expires: {expires}]",
+                [
+                    'key' => $key,
+                    'expires' => $item->getExpiration()->getTimestamp()
+                ]
+            );
         } else {
             // Log
             $this->info(
-                "Did not save to cache because request was unsuccessful.", [
-                'key' => $key,
-                'statusCode' => $response->getStatusCode()
-            ]);
+                "Did not save to cache because request was unsuccessful.",
+                [
+                    'key' => $key,
+                    'statusCode' => $response->getStatusCode()
+                ]
+            );
         }
 
         return $response;
