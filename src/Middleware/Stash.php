@@ -20,7 +20,7 @@ use Stash\Interfaces\ItemInterface;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  */
-class Cache extends AbstractMiddleware
+class Stash extends AbstractMiddleware
 {
 
     /**
