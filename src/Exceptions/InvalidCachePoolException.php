@@ -6,7 +6,7 @@
  * @link       https://github.com/flipbox/relay-stash
  */
 
-namespace Flipbox\Stash\Exceptions;
+namespace Flipbox\Relay\Exceptions;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>

@@ -6,11 +6,10 @@
  * @link       https://github.com/flipbox/relay-stash
  */
 
-namespace Flipbox\Stash\Middleware;
+namespace Flipbox\Relay\Middleware;
 
-use Flipbox\Stash\Exceptions\InvalidCachePoolException;
+use Flipbox\Relay\Exceptions\InvalidCachePoolException;
 use Flipbox\Http\Stream\Factory as StreamFactory;
-use Flipbox\Relay\Middleware\AbstractMiddleware;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
