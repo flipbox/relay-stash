@@ -4,7 +4,7 @@
 [![Build Status](https://img.shields.io/travis/flipbox/relay-stash/master.svg?style=flat-square)](https://travis-ci.org/flipbox/relay-stash)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/flipbox/relay-stash.svg?style=flat-square)](https://scrutinizer-ci.com/g/flipbox/relay-stash/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/flipbox/relay-stash.svg?style=flat-square)](https://scrutinizer-ci.com/g/flipbox/relay-stash)
-[![Total Downloads](https://img.shields.io/packagist/dt/flipboxdigital/relay-stash.svg?style=flat-square)](https://packagist.org/packages/league/relay-stash)
+[![Total Downloads](https://img.shields.io/packagist/dt/flipboxdigital/relay-stash.svg?style=flat-square)](https://packagist.org/packages/flipboxdigital/relay-stash)
 
 This package provides a [Stash](https://github.com/tedious/Stash) middleware for [Relay](http://relayphp.com/).
 
