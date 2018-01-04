@@ -1,7 +1,7 @@
 {
   "name": "flipboxdigital/relay-stash",
   "description": "Stash Cache middleware for Relay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": [
     "cache",
     "psr-6",

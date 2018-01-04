@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to `flipboxdigital\relay-cache` will be documented in this file
 
-## Unreleased
+## 1.0.2 - 2018-01-04
 
 ### Changed
 - Stash::getCacheKey changed to protected for extensibility
