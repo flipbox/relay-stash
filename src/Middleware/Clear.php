@@ -42,7 +42,6 @@ class Clear extends AbstractCache
                     'key' => $key
                 ]
             );
-
         } else {
             $this->info(
                 "Item not removed from cache. [key: {key}]",
