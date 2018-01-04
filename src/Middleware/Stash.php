@@ -8,9 +8,7 @@
 
 namespace Flipbox\Relay\Middleware;
 
-use Flipbox\Relay\Exceptions\InvalidCachePoolException;
 use Flipbox\Http\Stream\Factory as StreamFactory;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -20,35 +18,8 @@ use Stash\Interfaces\ItemInterface;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  */
-class Stash extends AbstractMiddleware
+class Stash extends AbstractCache
 {
-
-    /**
-     * @var CacheItemPoolInterface The connection
-     */
-    public $pool;
-
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        // Parent
-        parent::init();
-
-        // Ensure we have a valid pool
-        if (!$this->pool instanceof CacheItemPoolInterface) {
-            throw new InvalidCachePoolException(
-                sprintf(
-                    "The class '%s' requires a cache pool that is an instance of '%s', '%s' given.",
-                    get_class($this),
-                    CacheItemPoolInterface::class,
-                    get_class($this->pool)
-                )
-            );
-        }
-    }
-
     /**
      * @inheritdoc
      */
@@ -72,7 +43,7 @@ class Stash extends AbstractMiddleware
         } else {
             // Log
             $this->info(
-                "Item not found in Cache. [key: {key}]",
+                "Item not found in cache. [key: {key}]",
                 [
                     'key' => $key
                 ]
@@ -106,12 +77,13 @@ class Stash extends AbstractMiddleware
      * @param ResponseInterface $response
      * @param ItemInterface $item
      * @return ResponseInterface
+     * @throws \Flipbox\Http\Stream\Exceptions\InvalidStreamException
      */
     protected function applyCacheToResponseBody(ResponseInterface $response, ItemInterface $item)
     {
         // Log
         $this->info(
-            "Item found in Cache. [key: {key}, expires: {expires}]",
+            "Item found in cache. [key: {key}, expires: {expires}]",
             [
                 'key' => $item->getKey(),
                 'expires' => $item->getExpiration()->getTimestamp()
@@ -144,23 +116,11 @@ class Stash extends AbstractMiddleware
 
         // Log
         $this->info(
-            "Save item to Cache. [key: {key}, expires: {expires}]",
+            "Save item to cache. [key: {key}, expires: {expires}]",
             [
                 'key' => $item->getKey(),
                 'expires' => $item->getExpiration()->getTimestamp()
             ]
         );
-    }
-
-    /**
-     * Returns the id used to cache a request.
-     *
-     * @param RequestInterface $request
-     *
-     * @return string
-     */
-    protected function getCacheKey(RequestInterface $request): string
-    {
-        return $request->getMethod() . md5((string)$request->getUri());
     }
 }

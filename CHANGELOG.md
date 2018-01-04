@@ -1,6 +1,14 @@
 # Changelog
 All Notable changes to `flipboxdigital\relay-cache` will be documented in this file
 
+## Unreleased
+
+### Added
+- Clear middleware responsible for removing cache
+
+### Added
+- Stash and Clear middleware now accept an explicit cache key
+
 ## 1.0.2 - 2018-01-04
 
 ### Changed
