@@ -28,29 +28,34 @@ class Clear extends AbstractCache
     ): ResponseInterface {
         parent::__invoke($request, $response);
 
-        // Create a cache key
-        $key = $this->getCacheKey($request);
+        $response = $next($request, $response);
 
-        /** @var ItemInterface $item */
-        $item = $this->pool->getItem($key);
+        // Only cache successful responses
+        if ($this->isResponseSuccessful($response)) {
+            // Create a cache key
+            $key = $this->getCacheKey($request);
 
-        // If it's cached
-        if ($item->isHit() && $item->clear()) {
-            $this->info(
-                "Item removed from cache successfully. [key: {key}]",
-                [
-                    'key' => $key
-                ]
-            );
-        } else {
-            $this->info(
-                "Item not removed from cache. [key: {key}]",
-                [
-                    'key' => $key
-                ]
-            );
+            /** @var ItemInterface $item */
+            $item = $this->pool->getItem($key);
+
+            // If it's cached
+            if ($item->isHit() && $item->clear()) {
+                $this->info(
+                    "Item removed from cache successfully. [key: {key}]",
+                    [
+                        'key' => $key
+                    ]
+                );
+            } else {
+                $this->info(
+                    "Item not removed from cache. [key: {key}]",
+                    [
+                        'key' => $key
+                    ]
+                );
+            }
         }
 
-        return $next($request, $response);
+        return $response;
     }
 }

@@ -11,6 +11,7 @@ namespace Flipbox\Relay\Middleware;
 use Flipbox\Relay\Exceptions\InvalidCachePoolException;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -62,5 +63,28 @@ abstract class AbstractCache extends AbstractMiddleware
             $this->key = $request->getMethod() . md5((string)$request->getUri());
         }
         return (string)$this->key;
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return bool
+     */
+    protected function isResponseSuccessful(ResponseInterface $response): bool
+    {
+        if ($response->getStatusCode() >= 200 &&
+            $response->getStatusCode() < 300
+        ) {
+            return true;
+        }
+
+        $this->getLogger()->warning(
+            "API request was not successful",
+            [
+                'code' => $response->getStatusCode(),
+                'reason' => $response->getReasonPhrase()
+            ]
+        );
+
+        return false;
     }
 }
