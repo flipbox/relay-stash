@@ -3,6 +3,8 @@ All Notable changes to `flipboxdigital\relay-cache` will be documented in this f
 
 ## Unreleased
 
+## 1.1.0 - 2018-01-04
+
 ### Added
 - Clear middleware responsible for removing cache
 
