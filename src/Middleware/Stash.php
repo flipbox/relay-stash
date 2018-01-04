@@ -159,7 +159,7 @@ class Stash extends AbstractMiddleware
      *
      * @return string
      */
-    private function getCacheKey(RequestInterface $request): string
+    protected function getCacheKey(RequestInterface $request): string
     {
         return $request->getMethod() . md5((string)$request->getUri());
     }
