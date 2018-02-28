@@ -77,7 +77,7 @@ abstract class AbstractCache extends AbstractMiddleware
             return true;
         }
 
-        $this->getLogger()->warning(
+        $this->warning(
             "API request was not successful",
             [
                 'code' => $response->getStatusCode(),
