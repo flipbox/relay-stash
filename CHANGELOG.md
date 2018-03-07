@@ -1,9 +1,10 @@
 # Changelog
 All Notable changes to `flipboxdigital\relay-cache` will be documented in this file
 
-## Unreleased
+## 1.2.0 - 2018-02-06
 ### Changed
 - Issue when logging warning on unsuccessful api response
+- Bumped dependencies
 
 ## 1.1.0 - 2018-01-04
 ### Added

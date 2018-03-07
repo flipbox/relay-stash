@@ -1,7 +1,7 @@
 {
   "name": "flipboxdigital/relay-stash",
   "description": "Stash Cache middleware for Relay",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "keywords": [
     "cache",
     "psr-6",
@@ -18,7 +18,7 @@
   "require": {
     "php": ">=7.0",
     "tedivm/stash": "^0.14.2",
-    "flipboxdigital/relay": "~2.0",
+    "flipboxdigital/relay": "~3.0",
     "flipboxdigital/http-stream": "~2.0"
   },
   "require-dev": {
@@ -34,9 +34,6 @@
     "psr-4": {
       "Flipbox\\Relay\\Tests\\": "tests/src/"
     }
-  },
-  "config": {
-    "optimize-autoloader": true
   },
   "extra": {
     "branch-alias": {
